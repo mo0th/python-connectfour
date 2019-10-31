@@ -9,8 +9,8 @@ class ConnectFour:
             [' ' for j in range(height)] for i in range(width)
         ]
         self.isP1Turn = True
-        self.p1Char = 'X'
-        self.p2Char = 'O'
+        self.p1Char = '\u001b[31m█\u001b[0m'
+        self.p2Char = '\u001b[33m█\u001b[0m'
         self.winner = None
 
     def board_str(self):
@@ -24,7 +24,7 @@ class ConnectFour:
         for i in range(self.height):
             line = '│'
             for j in range(self.width):
-                line += f' {self.board[j][i]} │'
+                line += f'{self.board[j][i] * 3}│'
             out += line + '\n'
             # if the row is not the last, add a separator to output
             if (i != self.height - 1):
