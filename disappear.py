@@ -11,9 +11,11 @@ def delete_line(line_to_delete: str):
 
 
 def delete_lines(lines_to_delete: str):
+    # print(lines_to_delete)
     lines = lines_to_delete.split('\n')
     for line in lines:
         delete_line(line)
+        pass
 
 
 def disappearing_input(prompt: str):

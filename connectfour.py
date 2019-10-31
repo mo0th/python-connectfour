@@ -1,6 +1,5 @@
 from disappear import delete_lines, delete_line, disappearing_input
 
-
 class ConnectFour:
     def __init__(self, width: int = 7, height: int = 6):
         self.width = width
@@ -9,8 +8,15 @@ class ConnectFour:
             [' ' for j in range(height)] for i in range(width)
         ]
         self.isP1Turn = True
-        self.p1Char = '\u001b[31m█\u001b[0m'
-        self.p2Char = '\u001b[33m█\u001b[0m'
+        self.p1Char = 'X'
+        self.p2Char = 'O'
+        # # colours!
+        # self.p1Char = '\u001b[31m█\u001b[0m'
+        # self.p2Char = '\u001b[33m█\u001b[0m'
+        # # 'bright' colours
+        # self.p1Char = '\u001b[31;1m█\u001b[0m'
+        # self.p2Char = '\u001b[33;1m█\u001b[0m'
+        
         self.winner = None
 
     def board_str(self):
@@ -24,7 +30,7 @@ class ConnectFour:
         for i in range(self.height):
             line = '│'
             for j in range(self.width):
-                line += f'{self.board[j][i] * 3}│'
+                line += self.board[j][i].ljust(2, ' ').rjust(3, ' ') + '│'
             out += line + '\n'
             # if the row is not the last, add a separator to output
             if (i != self.height - 1):
@@ -42,7 +48,7 @@ class ConnectFour:
             else:
                 out += '    '
 
-        return out
+        return out + '\n'
 
     def show(self):
         print(self.board_str())
@@ -101,6 +107,7 @@ class ConnectFour:
                 self.board[column][i] = self.get_current_char()
                 self.check_winner()
                 break
+        self.num_turns += 1
 
         self.isP1Turn = not self.isP1Turn
 
@@ -131,7 +138,9 @@ class ConnectFour:
         return selection
 
     def play(self):
-        while self.winner == None and not self.is_board_full():
+      # self.winner == None and 
+        while not self.is_board_full():
+            print(len(self.board_str()))
             self.show()
             move = self.get_player_turn()
             self.insert(move)
@@ -163,3 +172,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+    file.close()
