@@ -107,7 +107,6 @@ class ConnectFour:
                 self.board[column][i] = self.get_current_char()
                 self.check_winner()
                 break
-        self.num_turns += 1
 
         self.isP1Turn = not self.isP1Turn
 
@@ -140,7 +139,6 @@ class ConnectFour:
     def play(self):
       # self.winner == None and 
         while not self.is_board_full():
-            print(len(self.board_str()))
             self.show()
             move = self.get_player_turn()
             self.insert(move)
