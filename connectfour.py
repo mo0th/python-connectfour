@@ -8,11 +8,13 @@ class ConnectFour:
             [' ' for j in range(height)] for i in range(width)
         ]
         self.isP1Turn = True
-        self.p1Char = 'X'
-        self.p2Char = 'O'
+        self.p1Char = '█'
+        self.p2Char = '░'
+        # self.p1Char = 'X'
+        # self.p2Char = 'O'
         # # colours!
-        # self.p1Char = '\u001b[31m█\u001b[0m'
-        # self.p2Char = '\u001b[33m█\u001b[0m'
+        # self.p1Char = u'\u001b[31m█\u001b[0m'
+        # self.p2Char = u'\u001b[33m█\u001b[0m'
         # # 'bright' colours
         # self.p1Char = '\u001b[31;1m█\u001b[0m'
         # self.p2Char = '\u001b[33;1m█\u001b[0m'
@@ -30,7 +32,8 @@ class ConnectFour:
         for i in range(self.height):
             line = '│'
             for j in range(self.width):
-                line += self.board[j][i].ljust(2, ' ').rjust(3, ' ') + '│'
+                line += self.board[j][i] * 3 + '│'
+                # line += self.board[j][i].ljust(2, ' ').rjust(3, ' ') + '│'
             out += line + '\n'
             # if the row is not the last, add a separator to output
             if (i != self.height - 1):
@@ -160,7 +163,7 @@ class ConnectFour:
 def main():
     play = True
     while play:
-        board = ConnectFour()
+        board = ConnectFour(width = 7, height = 6)
         board.play()
 
         play_again = disappearing_input("Play again? (y/n)")
