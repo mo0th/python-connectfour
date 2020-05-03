@@ -1,5 +1,6 @@
 from disappear import delete_lines, delete_line, disappearing_input
 
+
 class ConnectFour:
     def __init__(self, width: int = 7, height: int = 6):
         self.width = width
@@ -18,7 +19,7 @@ class ConnectFour:
         # # 'bright' colours
         # self.p1Char = '\u001b[31;1m█\u001b[0m'
         # self.p2Char = '\u001b[33;1m█\u001b[0m'
-        
+
         self.winner = None
 
     def board_str(self):
@@ -59,7 +60,7 @@ class ConnectFour:
     def unshow(self):
         delete_lines(self.board_str())
 
-    def is_valid_move(self, column: int):
+    def is_valid_move(self, column):
         col_list = [self.board[column][i] for i in range(self.height)]
         return any(cell == ' ' for cell in col_list)
 
@@ -90,9 +91,11 @@ class ConnectFour:
             for r in range(self.height-3):
                 if board[c][r] == board[c+1][r+1] == board[c+2][r+2] == board[c+3][r+3] != ' ':
                     is_winning_move = True
-
+        #print(is_winning_move)
         if is_winning_move:
             self.winner = 2 if self.isP1Turn else 1
+        elif self.is_board_full():
+            self.winner = -1
 
     def get_valid_columns(self):
         valid_columns = []
@@ -129,6 +132,8 @@ class ConnectFour:
         while not selection_is_valid:
             selection = disappearing_input(player_selection_text + ' \b')
             try:
+                if selection in ['q', 'quit']:
+                    self.exit_game()
                 selection = int(selection)
                 if selection in self.get_valid_columns():
                     selection_is_valid = True
@@ -140,21 +145,25 @@ class ConnectFour:
         return selection
 
     def play(self):
-      # self.winner == None and 
         while not self.is_board_full():
             self.show()
             move = self.get_player_turn()
             self.insert(move)
             self.check_winner()
-
             self.unshow()
+            if self.winner:
+                break
 
-        if not self.winner:
+        if self.winner == -1:
             print("Both of you suck! Get a life!")
         else:
             winner = self.winner
             loser = 1 if winner == 2 else 2
             print(f"Player {winner} wins! Player {loser} sucks!")
+
+    def exit_game(self):
+        print("Goodbye.")
+        exit()
 
     def __str__(self):
         return self.board_str()
@@ -163,7 +172,7 @@ class ConnectFour:
 def main():
     play = True
     while play:
-        board = ConnectFour(width = 7, height = 6)
+        board = ConnectFour(width=7, height=6)
         board.play()
 
         play_again = disappearing_input("Play again? (y/n)")
@@ -173,4 +182,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    file.close()
