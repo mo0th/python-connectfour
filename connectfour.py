@@ -145,6 +145,7 @@ class ConnectFour:
         return selection
 
     def play(self):
+        print("Enter 'q' or 'quit' to quit the game.")
         while not self.is_board_full():
             self.show()
             move = self.get_player_turn()
